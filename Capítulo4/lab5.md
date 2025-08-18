@@ -331,9 +331,9 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
   ![micint](../images/lab5/4.png)
 
-- **Paso 24.** Construye,etiqueta y sube `ms-productos`. Ejecuta los comandos 1 por 1:
+- **Paso 24.** Construye, etiqueta y sube `ms-productos`. Ejecuta los comandos 1 por 1:
 
-  **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-prodctos**.
+  **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-productos**.
 
   ```bash
   cd ../ms-productos
@@ -361,7 +361,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 25.** Repite para `ms-deseos`:
 
-  **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-prodctos**.
+  **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-deseos**.
 
   **IMPORTANTE:** Solo si te llegase a marcar error a causa de almacenamiento de AWS Cloud Shell da clic en **Actions** y luego en **Restart**. Sino continua con la construcciones de la imagen
 
@@ -371,7 +371,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   - `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com`
 
   ```bash
-  cd ../ms-deseos
+  cd ./ms-deseos
   ```
 
   ---
