@@ -104,7 +104,9 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
 #### Tarea 3.1 – Crear y validar el clúster  
 
-- **Paso 8.** Define las variables. Sustituye las letras `xxxx`por tus iniciales o letras y numeros aleatorios.
+- **Paso 8.** Define las variables. Sustituye las letras **`xxxx`** por tus iniciales o *letras* y *numeros aleatorios*.
+
+  - Si es necesario editalas en un **Bloc de Notas** ajusta los valores y pegalas de vuelta en la terminal.
 
   ```bash
   CLUSTER_NAME=eks-citas-xxxx
@@ -240,7 +242,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
   docker build -t ms-citas ./ms-citas
   ```
 
-- **Paso 19.** Comienza a etiquetar y subir las imagenes.
+- **Paso 19.** Comienza a etiquetar y subir las imagenes. **`ms-pacientes`**
 
   **NOTA:** Si es necesario ajusta los nombres de las imagenes.
 
@@ -255,7 +257,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
   ![micint](../images/lab2/11.png)
 
-- **Paso 20.** Comienza a etiquetar y subir las imagenes.
+- **Paso 20.** Comienza a etiquetar y subir las imagenes. **`ms-medicos`**
 
   **NOTA:** Si es necesario ajusta los nombres de las imagenes.
 
@@ -270,7 +272,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
   ![micint](../images/lab2/12.png)
 
-- **Paso 21.** Comienza a etiquetar y subir las imagenes.
+- **Paso 21.** Comienza a etiquetar y subir las imagenes. **`ms-citas`**
 
   **NOTA:** Si es necesario ajusta los nombres de las imagenes.
 
@@ -299,7 +301,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
   ---
 
-    - **Medicos**
+  - **Medicos**
 
   ```bash
   aws ecr list-images --repository-name ms-medicos --output table
@@ -311,7 +313,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
   ---
 
-    - **Citas**
+  - **Citas**
 
   ```bash
   aws ecr list-images --repository-name ms-citas --output table
@@ -335,7 +337,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
 #### Tarea 5.1 – Crear manifiestos en directorio `k8s/`
 
-- **Paso 24.** Ahora regresa a la terminal **AWS CloudShell** en la `Consola de AWS`
+- **Paso 24.** Ahora en la terminal **AWS CloudShell** en la `Consola de AWS`
 
 - **Paso 25.** Crea la carpeta y navega al interior:
 
@@ -352,9 +354,9 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
   - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2**
   - Crea el archivo llamado: `touch pacientes-deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano pacientes-deployment.yaml`
-  - Pega el contenido yaml.
-  - Edita la URI del respositorio
-  - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
+  - Copia y pega el contenido yaml.
+  - Edita la `<ECR_URI>` del respositorio
+  - Para salir del editor ejecuta `CTRL + o` Enter y `CTRL + x`
 
   ```yaml
   apiVersion: apps/v1
@@ -395,9 +397,9 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
   - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2**
   - Crea el archivo llamado: `touch medicos-deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano medicos-deployment.yaml`
-  - Pega el contenido yaml.
-  - Edita la URI del respositorio
-  - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
+  - Copia y pega el contenido yaml.
+  - Edita la `<ECR_URI>` del respositorio
+  - Para salir del editor ejecuta `CTRL + o` Enter y `CTRL + x`
 
   ```yaml
   apiVersion: apps/v1
@@ -438,9 +440,9 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
   - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2**
   - Crea el archivo llamado: `touch citas-deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano citas-deployment.yaml`
-  - Pega el contenido yaml.
-  - Edita la URI del respositorio
-  - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
+  - Copia y pega el contenido yaml.
+  - Edita la `<ECR_URI>` del respositorio
+  - Para salir del editor ejecuta `CTRL + o` Enter y `CTRL + x`
 
   ```yaml
   apiVersion: apps/v1
@@ -714,6 +716,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 - **Paso 39.** Compila la imagen con el siguiente comando.
 
   **NOTA:** Ajusta la ruta si es necesario
+  - Debes estar dentro del directorio **FrontEnd**
 
   ```bash
   docker build -t citas-app-frontend:latest ./frontend
@@ -739,9 +742,9 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
   - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2**
   - Crea el archivo llamado: `touch frontend-deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano frontend-deployment.yaml`
-  - Pega el contenido yaml.
-  - Edita la URI del respositorio
-  - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
+  - Copia y pega el contenido yaml.
+  - Edita la `<ECR_URI>` del respositorio
+  - Para salir del editor ejecuta `CTRL + o` Enter y `CTRL + x`
 
   ```yaml
   apiVersion: apps/v1
@@ -857,9 +860,9 @@ La aplicación de citas médicas está desplegada en Amazon EKS con imágenes de
 
 ## URLS de referencia
 
-- https://docs.aws.amazon.com/cloudshell/  
-- https://eksctl.io/   
-- https://kubernetes.io/docs/concepts/
+- [AWS CLOUDSHELL](https://docs.aws.amazon.com/cloudshell/)  
+- [AWS EKSCTL API](https://eksctl.io/)   
+- [Kubernees Docs](https://kubernetes.io/docs/concepts/)
 
 
 ---

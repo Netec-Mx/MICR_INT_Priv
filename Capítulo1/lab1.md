@@ -86,6 +86,8 @@ Prepara el entorno local de desarrollo e ingresa a la sesión del servidor virtu
 
 - **Paso 6.** Crea la estructura base del proyecto, en el **Escritorio** del equipo asignado:
 
+  - Si es necesario escribe `ls` para ver los directorios creados como  lo muestra la imagen.
+
   ```bash
   cd Desktop/
   mkdir citas-app && cd citas-app
@@ -113,14 +115,17 @@ Construcción del microservicio con Node.js y Dockerfile.
   ```bash
   cd ms-pacientes/
   touch app.js
-  ls -l
+  ls
   ```
 
   ---
 
   ![micint](../images/lab1/8.png)
 
-- **Paso 8.** Abre el archivo, copia y pega el siguiente codigo y guardalo. Escribe `code app.js` 
+- **Paso 8.** Abre el archivo, copia y pega el siguiente codigo y guardalo.
+
+  - Escribe en la terminal el siguiente comando para abrir el archivo: `code app.js`
+  - Guarda el archivo.
 
   ```js
   const express = require('express');
@@ -206,7 +211,7 @@ A partir de `ms-pacientes`, se crearán dos nuevos microservicios con código ad
   ---
 
   ```bash
-  cp -r ms-pacientes/* ms-citas/
+  cp -r ../ms-pacientes/* ../ms-citas/
   ```
 
   ---
@@ -217,6 +222,7 @@ A partir de `ms-pacientes`, se crearán dos nuevos microservicios con código ad
 
   - Escribe `cd ../ms-medicos` para cambiar de directorio.
   - Escribe `code app.js` para editar el archivo
+  - Borra el contenido y pega el de abajo
 
   ```js
   const express = require('express');
@@ -243,6 +249,7 @@ A partir de `ms-pacientes`, se crearán dos nuevos microservicios con código ad
 - **Paso 13.** En `ms-medicos/Dockerfile`, cambia el puerto expuesto:
 
   - Escribe `code Dockerfile` para editar el archivo.
+  - Agrega el siguiente codigoo solo modifica el puerto
 
   ```Dockerfile
   FROM node:18
@@ -291,6 +298,7 @@ A partir de `ms-pacientes`, se crearán dos nuevos microservicios con código ad
 - **Paso 15.** En `ms-citas/Dockerfile`, cambia el puerto expuesto:
 
   - Escribe `code Dockerfile` para editar el archivo.
+  - Agrega el siguiente codigo o reemplaza el puerto.
 
   ```Dockerfile
   FROM node:18
@@ -436,7 +444,7 @@ Se levantará el entorno completo con un solo comando.
 
 - **Paso 17.** Crear `docker-compose.yml` en raíz del proyecto y copia y pega el contenido:
 
-  - Escribe `cd ..` para salir del directorio actual y entrar en raíz de `citas-app`.
+  - Escribe `cd ..` para salir del directorio actual y entrar **en raíz de `citas-app`**.
   - Escribe `touch docker-compose.yml` para crear el archivo.
   - Escribe `code docker-compose.yml` para entrar al archivo.
 
@@ -481,6 +489,7 @@ Compilar las imágenes y validar el correcto funcionamiento.
 - **Paso 18.** Escribe el siguiente comando para construir las imágenes:
 
   **NOTA:** La compilación puede tardar unos segundos/minutos.
+  - **RECUERDA** estar dentro del directorio **ms-citas**
 
   ```bash
   docker compose build
@@ -512,7 +521,7 @@ Compilar las imágenes y validar el correcto funcionamiento.
 
 - **Paso 18.** Validar endpoints mediante CLI:
 
-  **NOTA:** Este dara un resultado vacion ya que no hay pacientes.
+  **NOTA:** Este dara un resultado vacio ya que no hay pacientes.
 
   ```bash
   curl http://localhost:3001/pacientes
@@ -554,10 +563,10 @@ El entorno base de microservicios está construido con imágenes Docker personal
 
 ## URLS de referencia  
 
-- https://docs.docker.com/compose/  
-- https://expressjs.com/  
-- https://nodejs.org/  
-- https://developer.mozilla.org/es/docs/Web/HTML
+- [Docker Compose](https://docs.docker.com/compose/)  
+- [Express JS](https://expressjs.com/)  
+- [Node JS](https://nodejs.org/)  
+- [HTML](https://developer.mozilla.org/es/docs/Web/HTML)
 
 ---
 
