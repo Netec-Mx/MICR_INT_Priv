@@ -520,7 +520,7 @@ En esta práctica se levantará una infraestructura EKS desde cero, se almacenar
 
   ---
 
-  ![micint](../images/lab2/20.png)
+  ![micint](../images/lab2/28.png)
 
 - **Paso 32.** Ahora copia el valor de la propiedad **`EXTERNLA-IP`** de cada microservicio, citas, medicos y pacientes. Guardalo en un block de notas temporalmente.
 
