@@ -330,7 +330,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 - **Paso 24.** Si en el paso anterior mostro los pods de metrics server en el estado **Running**, avanza al siguiente paso. De otra manera instala metrics server.
 
-  **IMPORTANTE:** Si Metrics Server esta instalado, el siguiente comando no es necesario.
+  **IMPORTANTE:** Metrics Server esta instalado, el siguiente comando no es necesario. **Solo es de referencia**
 
   ```bash
   kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
