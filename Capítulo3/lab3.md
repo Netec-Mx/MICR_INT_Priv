@@ -122,7 +122,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 #### Tarea 3.1 – Crear estructura de aplicación personalizada
 
-- **Paso 9.** Crea una carpeta para la aplicación:
+- **Paso 9.** Dentro de la misma terminal **AWS CloudShell** crea una carpeta para la aplicación:
 
   ```bash
   mkdir node-loadapp
@@ -175,7 +175,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 #### Tarea 3.3 – Construir y subir imagen a ECR
 
-- **Paso 14.** Crear repositorio en ECR:
+- **Paso 14.** Ahi mismo en la terminal **AWS CloudShell** crea el repositorio en ECR:
 
   ```bash
   aws ecr create-repository --repository-name hpa-app
@@ -183,7 +183,9 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 - **Paso 15.** Valida la creación ejecutando el siguiente comando.
 
-    ```bash
+  **NOTA:** Quizas veas los repositorios de las practicas pasadas, puedes omitirlos y enfocarte al de esta practica.
+
+  ```bash
   aws ecr describe-repositories --query "repositories[*].repositoryName" --output table
   ```
 
@@ -209,9 +211,9 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
   ![micint](../images/lab3/2.png)
 
-- **Paso 18.** Construye y sube imagen:
+- **Paso 18.** Construye y sube imagen desde **AWS CloudShell**:
 
-  **NOTA:** La aplicación puede tardar de 3 a 5 minutos en compilar.
+  **NOTA:** La aplicación puede tardar de 3 a 8 minutos en compilar y subir.
 
   ```bash
   docker build -t hpa-app .
@@ -219,12 +221,14 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
   ---
 
+  - Pasos Para subir la imagen, recuerda primero etiquetar y luego subir.
+
   ```bash
   docker tag hpa-app:latest $ECR_URI/hpa-app:v1
   docker push $ECR_URI/hpa-app:v1
   ```
 
-- **Paso 19.** Verifica que la imagen este creada correctamente:
+- **Paso 19.** Verifica que la imagen este cargada correctamente en el repositorio:
 
   ```bash
   aws ecr list-images --repository-name hpa-app --output table
@@ -242,13 +246,15 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 ### Tarea 4: Desplegar la app y configurar el servicio
 
-**Descripción:** En esta tarea crearas los archivos para para realizar el despliegue de los archivos en EKS.
+**Descripción:** En esta tarea crearas los manifiestos para para realizar el despliegue en Amazon EKS.
 
 #### Tarea 4.1 – Crear manifiesto `deployment.yaml`
 
-- **Paso 20.** Crea el siguiente archivo (reemplaza `<ECR_URI>`):
+- **Paso 20.** Crea el siguiente archivo dentro del mismo directorio **node-loadapp** (realiza los pasos siguientes para reemplazar `<ECR_URI>`):
 
-  - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 3.3**
+  **NOTA:** Recuerda que las terminales son termporales si se cierran debemos recolectar los valores nuevamente.
+
+  - Escribe el siguiente comando y guardalo en un bloc de notas: `echo $ECR_URI` - sino te da resultado vuelve a la **Tarea 3.3 | Paso 16**
   - Crea el archivo llamado: `touch deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano deployment.yaml`
   - Pega el contenido yaml.
@@ -338,7 +344,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 #### Tarea 5.2 – Crear `hpa.yaml`
 
-- **Paso 25.**  Crea el siguiente archivo.
+- **Paso 25.**  Crea el siguiente archivo dentro del mismo directorio **node-loadapp**.
 
   - Crea el archivo llamado: `touch hpa.yaml`
   - Edita el archivo con nano u otro editor: `nano hpa.yaml`
@@ -416,7 +422,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
 - **Paso 30.** Ahora verifica la saturación de los pods y detectaras como trabaja el HPA.
 
-- **Paso 31.** No rompas el proceso de saturación, abre otra terminal.
+- **Paso 31.** No rompas el proceso de saturación, **abre otra terminal de AWS CloudShell**.
 
   ![micint](../images/lab3/7.png)
 
