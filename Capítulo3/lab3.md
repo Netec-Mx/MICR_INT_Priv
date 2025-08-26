@@ -254,7 +254,7 @@ Kubernetes permite escalar dinámicamente los pods mediante el Horizontal Pod Au
 
   **NOTA:** Recuerda que las terminales son termporales si se cierran debemos recolectar los valores nuevamente.
 
-  - Escribe el siguiente comando y guardalo en un bloc de notas: `echo $ECR_URI` - sino te da resultado vuelve a la **Tarea 3.3 | Paso 16**
+  - Escribe el siguiente comando y guardalo en un bloc de notas: `echo $ECR_URI`. Sino te da resultado vuelve a la **Tarea 3.3 | Paso 16**
   - Crea el archivo llamado: `touch deployment.yaml`
   - Edita el archivo con nano u otro editor: `nano deployment.yaml`
   - Pega el contenido yaml.
