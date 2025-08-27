@@ -142,9 +142,10 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 4.1 – Descargar Helm
 
-- **Paso 10.** Ejecuta:
+- **Paso 10.** Ejecuta el siguiente comando en raíz para crear el directorio **monitoring** y descargar **Helm**:
 
   ```bash
+  mkdir monitoring && cd monitoring
   curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
   ```
 
@@ -154,7 +155,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 4.2 – Verificar instalación
 
-- **Paso 11.** Ejecuta:
+- **Paso 11.** Ejecuta el siguiente comando:
 
   ```bash
   helm version
@@ -176,7 +177,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 5.1 – Crear namespace y configuración
 
-- **Paso 12.** Ejecuta:
+- **Paso 12.** Ejecuta el comando dentro del directorio **monitoring**, pero recuerda que peude ser en cualquier parte de la terminal:
 
   ```bash
   kubectl create namespace monitoring
@@ -212,7 +213,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 5.2 – Agregar repositorio de Helm
 
-- **Paso 16.** Agrega el repo oficial:
+- **Paso 16.** Agrega promettheus al repo oficial:
 
   ```bash
   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -279,7 +280,9 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 6.1 – Instalar Grafana
 
-- **Paso 21.** Agrega los repositorios adecuados de Grafana pra Helm
+- **Paso 21.** Agrega los repositorios adecuados de Grafana para Helm.
+
+  - En la ruta que te encuentres puedes ejecutar el comando.
 
   ```bash
   helm repo add grafana https://grafana.github.io/helm-charts
@@ -287,6 +290,8 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
   ```
 
 - **Paso 22.** Ahora instala Grafana, ejecuta:
+
+  - En la ruta que te encuentres puedes ejecutar el comando
 
   ```bash
   helm install grafana grafana/grafana \
@@ -359,7 +364,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
   - Ir a **Connections** → **Data Sources**
   - Clic en **Add data source**
   - Selecciona **Prometheus**
-  - En `Prometheus server URL` escribe:
+  - En `Prometheus server URL` escribe ó copia y pega:
 
   ```
   http://prometheus-server.monitoring.svc.cluster.local
@@ -383,14 +388,16 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 - **Paso 30.** Agrega la librería `prom-client` a `ms-productos/`:
 
+  - Asegurate de estar dentro del directorio **monitoring**
+
   ```bash
-  cd proyecto-ingress
-  cd ms-productos
+  cp -r ../proyecto-ingress/ms-productos . && cd ms-productos
   npm install prom-client
   ```
 
 - **Paso 31.** Modifica `app.js`:
 
+  - Verifica los archivos con el comando: `ls`
   - Edita el archivo existente, escribe: `nano app.js`
   - Borra el codigo actual.
   - Agrega el siguiene codigo.
@@ -455,7 +462,11 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
   docker rmi ms-productos
   ```
 
-- **Paso 36.** Reinicia el shell pra que tome efecto da clic en **Actions** luego en **Restart**.
+- **Paso 36.** Reinicia el shell pra que tome efecto.
+
+  - Da clic en **Actions** (esquina superior derecha de **AWS CloudShell**) y luego en **Restart**.
+  - Confirma **Restart** en la ventana emergente.
+  - **Repite** los siguientes pasos para configurar las variables.
 
 #### Tarea 8.2 – Repetir para `ms-deseos`
 
@@ -463,9 +474,11 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 - **Paso 38.** Agrega la librería `prom-client` a `ms-deseos/`:
 
+  - Ejecuta el siguiente comando apra entrar a los directorios necesarios
+
   ```bash
-  cd proyecto-ingress
-  cd ms-deseos
+  cd monitoring/
+  cp -r ../proyecto-ingress/ms-deseos . && cd ms-deseos
   npm install prom-client
   ```
 
@@ -509,7 +522,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
   });
   ```
 
-- **Paso 40.** Construye la imagen.
+- **Paso 40.** Construye la imagen dentro del directorio **ms-deseos**.
 
   ```bash
   docker build -t ms-deseos .
@@ -533,18 +546,26 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 - **Paso 43.** Ahora edita correctamente los archivos deployments para ajustar la imagen creada.
 
+  - Retorna un directorio a **monitoring**
+  - Mueve **manifiestos-k8s** al directorio de **monitoring**
+  - **El comando de abajo ya hace todo**
+
   ```bash
-  cd ../manifiestos-k8s
-  nano deployment-msprod.yaml
+  cd ..
+  cp -r ../proyecto-ingress/manifiestos-k8s/ .
+  nano manifiestos-k8s/deployment-msprod.yaml
   ```
 
 - **Paso 44.** Ajusta el valor de la imagen de `ms-prod-v1` a `ms-prod-v2`
 
+  - **El archivo se queda igual solo ajusta la version de la imagen**
+
   **NOTA:** `CTRL + O` y `Enter` para guardar `CTRL + X` para salir.
 
-- **Paso 45.** Ahora crea el archivo service para actualizarlo con las metricas correspondientes.
+- **Paso 45.** Ahora **crea** el archivo service para actualizarlo con las metricas correspondientes.
 
-  - Crea el archivo llamado: `nano ms-productos-service.yaml`
+  - Dentro del directorio **monitoring**
+  - **Crea** el archivo service: `nano manifiestos-k8s/ms-productos-service.yaml`
   - Agrega el siguiene codigo.
   - Terminado de editar escribr: `CTRL + O` y `Enter` para guardar `CTRL + X` para salir.
 
@@ -572,15 +593,18 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 - **Paso 46.** Repite para **ms-deseos** cambia el valor de la imagen de `ms-deseo-v1` a `ms-deseo-v2`
 
+  - **El archivo se queda igual solo ajusta la version de la imagen**
+
   **NOTA:** `CTRL + O` y `Enter` para guardar `CTRL + X` para salir.
 
   ```bash
-  nano deployment-msdeseos.yaml
+  nano manifiestos-k8s/deployment-msdeseos.yaml
   ```
 
-- **Paso 47.** Ahora crea el archivo service para actualizarlo con las metricas correspondientes.
+- **Paso 47.** Ahora **crea** el archivo service para actualizarlo con las metricas correspondientes.
 
-  - Crea el archivo llamado: `nano ms-deseos-service.yaml`
+  - Dentro del directorio **monitoring**
+  - **Crea** el archivo service: `nano manifiestos-k8s/ms-deseos-service.yaml`
   - Agrega el siguiene codigo.
   - Terminado de editar escribr: `CTRL + O` y `Enter` para guardar `CTRL + X` para salir.
 
@@ -608,11 +632,13 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 - **Paso 48.** Despliega los manifiestos con los ajustes.
 
+  - Puedes ejecutar los 4 de una.
+
   ```bash
-  kubectl apply -f deployment-msprod.yaml
-  kubectl apply -f deployment-msdeseos.yaml
-  kubectl apply -f ms-productos-service.yaml
-  kubectl apply -f ms-deseos-service.yaml
+  kubectl apply -f manifiestos-k8s/deployment-msprod.yaml
+  kubectl apply -f manifiestos-k8s/deployment-msdeseos.yaml
+  kubectl apply -f manifiestos-k8s/ms-productos-service.yaml
+  kubectl apply -f manifiestos-k8s/ms-deseos-service.yaml
   ```
 
 > **TAREA FINALIZADA**
@@ -627,7 +653,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
 #### Tarea 9.1 – Crear dashboard personalizado
 
-- **Paso 49.** Entra a Grafana que dejaste abrieta en la **Tarea 6** sino regresa a esa tarea. Dentro de Grafana da clic en:
+- **Paso 49.** Entra a Grafana que dejaste abrieta en la **Tarea 6** sino regresa a esa tarea para obtener el DNS. Dentro de Grafana da clic en:
 
   - Clic en **Dashboards** → **+ Create dashboard**
   - Luego en **+ Add visualization**
@@ -656,7 +682,7 @@ Prometheus es una herramienta de recolección de métricas ampliamente utilizada
 
   - Clic en el menu lateral izquierdo **Dashboards**.
   - Clic en el nombre del dashboard **CPU Dashboard**
-  - Clic en el botón **Add** lateral superior izquierdo.
+  - Clic en el botón **Add** lateral superior derecho.
   - Selecciona **Visualization**
 
 - **Paso 54.** Repite los pasos para agregar la metrica.
@@ -713,9 +739,9 @@ Prometheus recolecta métricas de los microservicios, y Grafana permite visualiz
 
 ## URLs de referencia
 
-- https://prometheus.io/docs/introduction/overview/
-- https://grafana.com/docs/grafana/latest/
-- https://github.com/prometheus/node_exporter
+- [What is Prometheus?](https://prometheus.io/docs/introduction/overview/)
+- [Grafana Overview](https://grafana.com/docs/grafana/latest/)
+- [Node exporter](https://github.com/prometheus/node_exporter)
 
 ---
 
