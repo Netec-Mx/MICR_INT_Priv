@@ -117,7 +117,7 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 ### Tarea 3: Crear los recursos de configuración
 
-**Descripción breve:** Crear un `ConfigMap` para los valores visuales y un `Secret` para valores sensibles.
+**Descripción:** Crear un `ConfigMap` para los valores visuales y un `Secret` para valores sensibles.
 
 #### Tarea 3.1 – Crear `configmap.yaml` dentro de `node-loadapp/`
 
@@ -125,7 +125,7 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
   - Crea el archivo llamado: `touch configmap.yaml`
   - Edita el archivo con nano u otro editor: `nano configmap.yaml`
-  - Pega el contenido yaml.
+  - Copia y pega el contenido de abajo yaml.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```yaml
@@ -140,6 +140,8 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 - **Paso 10.** Aplica el archivo:
 
+  **NOTA:** Ajusta la ruta del directorio si es necesario.
+
   ```bash
   kubectl apply -f configmap.yaml
   ```
@@ -150,7 +152,7 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
   - Crea el archivo llamado: `touch secret.yaml`
   - Edita el archivo con nano u otro editor: `nano secret.yaml`
-  - Pega el contenido yaml.
+  - Copia y pega el contenido de abajo yaml.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```yaml
@@ -188,15 +190,15 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 ### Tarea 4: Actualizar el código fuente de la app
 
-**Descripción breve:** Modificar la app Node.js para leer `TITLE`, `COLOR` y `API_KEY` desde variables de entorno.
+**Descripción:** Modificar la app Node.js para leer `TITLE`, `COLOR` y `API_KEY` desde variables de entorno.
 
 #### Tarea 4.1 – Crear un nuevo archivo `server.js` en `node-loadapp/`
 
-- **Paso 14.** Crea un archivo `server.js` si no existe:
+- **Paso 14.** Crea un archivo `server.js` en `node-loadapp`:
 
   - Crea el archivo llamado: `touch server.js`
   - Edita el archivo con nano u otro editor: `nano server.js`
-  - Pega el contenido yaml.
+  - Copia y pega el contenido de abajo yaml.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```js
@@ -254,11 +256,18 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 - **Paso 18.** Etiqueta y sube la imagen al repositorio.
 
-  - Declara la variable de la cuenta de aws: `ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)`
-  - Declara la variable de la región: `REGION=us-west-2`
-  - Declara la variable de la URI de AWS ECR: `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com`
+  **NOTA:** Ejecuta los siguientes comandos de la tabla para declarar las variables y subir la imagen.
+
+  | Propiedad | Valor |
+  | --- | --- |
+  | Declara la variable de la cuenta de aws | `ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)` |
+  | Declara la variable de la región | `REGION=us-west-2` |
+  | Declara la variable de la URI de AWS ECR | `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com` |
+
+  - Despues de declarar las variables ejecuta los siguientes comandos
 
   ```bash
+  aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_URI
   docker tag node-loadapp:v1 $ECR_URI/node-loadapp:v1
   docker push $ECR_URI/node-loadapp:v1
   ```
@@ -271,15 +280,20 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 ### Tarea 5: Crear el Deployment para usar las variables
 
-**Descripción breve:** Crea el manifiesto `deployment-cs.yaml` para inyectar `ConfigMap` y `Secret` como variables de entorno.
+**Descripción:** Crea el manifiesto `deployment-cs.yaml` para inyectar `ConfigMap` y `Secret` como variables de entorno.
 
 #### Tarea 5.1 – Crear `deployment-cs.yaml`.
 
 - **Paso 19.** Crea el archivo `deployment-cs.yaml` dentro de `node-loadapp/`.
 
-  - Declara la variable de la cuenta de aws: `ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)`
-  - Declara la variable de la región: `REGION=us-west-2`
-  - Declara la variable de la URI de AWS ECR: `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com`
+  **NOTA:** Si ya tienes las variables declaradas puedes avanzar al primer **bullet** debajo de la tabla.
+
+  | Propiedad | Valor |
+  | --- | --- |
+  | Declara la variable de la cuenta de aws | `ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)` |
+  | Declara la variable de la región | `REGION=us-west-2` |
+  | Declara la variable de la URI de AWS ECR | `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com` |
+
   - Obten el la URI de AWS ECR: `echo $ECR_URI`
   - Copia el valor de la URI.
   - Crea el archivo llamado: `touch deployment-cs.yaml`.
@@ -339,11 +353,11 @@ En Kubernetes, `ConfigMap` y `Secret` permiten administrar parámetros de config
 
 ### Tarea 6: Exponer el servicio y validar
 
-**Descripción breve:** Crear un `Service` tipo LoadBalancer para acceder a la aplicación y validar que se visualizan las variables correctamente.
+**Descripción:** Crear un `Service` tipo LoadBalancer para acceder a la aplicación y validar que se visualizan las variables correctamente.
 
 #### Tarea 6.1 – Obtener la IP externa del servicio
 
-- **Paso 21.** Crea el archivo `service.yaml`.
+- **Paso 21.** Crea el archivo `service.yaml` en el directorio **node-loadapp**.
 
   - Crea el archivo llamado: `touch service.yaml`.
   - Edita el archivo con nano u otro editor: `nano service.yaml`.
@@ -398,7 +412,7 @@ kubectl exec -it $(kubectl get pod -l app=node-loadapp -o jsonpath="{.items[0].m
 
 ### Tarea 7: Cambiar configuración sin cambiar el contenedor
 
-**Descripción breve:** Demostrar que podemos cambiar configuración sin reconstruir imagen.
+**Descripción:** Demostrar que podemos cambiar configuración sin reconstruir imagen.
 
 #### Tarea 7.1 – Editar ConfigMap en caliente
 
@@ -408,15 +422,16 @@ kubectl exec -it $(kubectl get pod -l app=node-loadapp -o jsonpath="{.items[0].m
   kubectl edit configmap app-config
   ```
 
-- **Paso 27.** Cambia con cuidado las siguientes propiedades.
+- **Paso 27.** Cambia **con cuidado** las siguientes propiedades.
 
+  - Solo ajusta el valor despues del simbolo de los 2 puntos.
   - `CTRL + O` para guardar.
   - `CTRL + X`para salir del editor.
 
   ```yaml
   data:
-    TITLE: "🚀 App Escalable"
-    COLOR: "#008000"
+    COLOR: '#008000'
+    TITLE: 🚀 App Escalable
   ```
 
 #### Tarea 7.2 – Reiniciar los pods para tomar nuevos valores
@@ -464,9 +479,9 @@ kubectl logs <pod-name>
 
 ## URLS de referencia
 
-- https://kubernetes.io/docs/concepts/configuration/configmap/
-- https://kubernetes.io/docs/concepts/configuration/secret/
-- https://docs.aws.amazon.com/eks/latest/userguide/auth-configmap.html
+- [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+- [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+- [IAM users access to Kubernetes](https://docs.aws.amazon.com/eks/latest/userguide/auth-configmap.html)
 
 ---
 

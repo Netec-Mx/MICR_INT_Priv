@@ -121,13 +121,13 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 3.1 – Crear directorios base
 
-- **Paso 9.** En AWS CloudShell, crea el directorio base del proyecto y navega dentro de él:
+- **Paso 9.** En **AWS CloudShell** desde ruta raíz, crea el directorio base del proyecto y navega dentro de él:
 
   ```bash
   mkdir proyecto-ingress && cd proyecto-ingress
   ```
 
-- **Paso 10.** Crea las carpetas para los dos microservicios:
+- **Paso 10.** Dentro de **proyecto-ingress** crea las carpetas para los dos microservicios:
 
   ```bash
   mkdir ms-productos ms-deseos
@@ -141,11 +141,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   cd ms-productos
   ```
 
-- **Paso 12.** Crea el archivo `app.js` con el siguiente contenido:
+- **Paso 12.** Crea el archivo `app.js` en **ms-productos**.
 
   - Crea el archivo llamado: `touch app.js`
   - Edita el archivo con nano u otro editor: `nano app.js`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **app.js**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```js
@@ -167,11 +167,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   });
   ```
 
-- **Paso 13.** Crea `package.json`:
+- **Paso 13.** Crea `package.json` en el directorio **ms-productos**:
 
   - Crea el archivo llamado: `touch package.json`
   - Edita el archivo con nano u otro editor: `nano package.json`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **package.json**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
   
   ```json
@@ -185,11 +185,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   }
   ```
 
-- **Paso 14.** Crea el `Dockerfile`:
+- **Paso 14.** Crea el `Dockerfile` en el directorio **ms-productos**:
 
   - Crea el archivo llamado: `touch Dockerfile`
   - Edita el archivo con nano u otro editor: `nano Dockerfile`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **Dockerfile**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
   
   ```Dockerfile
@@ -207,17 +207,21 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 3.3 – Crear el microservicio `ms-deseos`
 
-- **Paso 16.** Regresa a la raíz y entra a `ms-deseos`:
+- **Paso 16.** Regresa a la raíz de la carpeta **proyecto-ingress** y entra al directorio `ms-deseos`:
+
+  **NOTA:** Si es necesario ajusta la ruta de directorios.
   
   ```bash
   cd ../ms-deseos
   ```
 
-- **Paso 17.** Crea el archivo `app.js`:
+- **Paso 17.** Crea el archivo `app.js` en el directorio **ms-deseos**:
+
+  **NOTA:** Asegurate de estar en el directorio **ms-deseos**
 
   - Crea el archivo llamado: `touch app.js`
   - Edita el archivo con nano u otro editor: `nano app.js`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **app.js**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```js
@@ -243,11 +247,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   });
   ```
 
-- **Paso 18.** Crea el `package.json`:
+- **Paso 18.** Crea el `package.json` en el directorio **ms-deseos**:
 
   - Crea el archivo llamado: `touch package.json`
   - Edita el archivo con nano u otro editor: `nano package.json`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **package.json**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```json
@@ -262,11 +266,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   }
   ```
 
-- **Paso 19.** Crea el `Dockerfile`:
+- **Paso 19.** Crea el `Dockerfile` en el directorio **ms-deseos**:
 
   - Crea el archivo llamado: `touch Dockerfile`
   - Edita el archivo con nano u otro editor: `nano Dockerfile`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo en el archivo **Dockerfile**.
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```Dockerfile
@@ -296,17 +300,25 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 21.** Ejecuta los siguientes comandos para crear los 2 repositorios:
 
+  **NOTA:** Funciona en cualquier ruta dentro de la terminal
+
+  - Productos
+
   ```bash
   aws ecr create-repository --repository-name ms-productos
   ```
 
   ---
 
+  - Deseos
+
   ```bash
   aws ecr create-repository --repository-name ms-deseos
   ```
 
 - **Paso 22.** Valida la creación ejecutando el siguiente comando.
+
+  **NOTA:** Recuerda que pueden existir los repositorios de las practicas pasadas. Puedes omitirlos y enfocarte a estos nuevos.
 
   ```bash
   aws ecr describe-repositories --query "repositories[*].repositoryName" --output table
@@ -331,7 +343,9 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
   ![micint](../images/lab5/4.png)
 
-- **Paso 24.** Construye, etiqueta y sube `ms-productos`. Ejecuta los comandos 1 por 1:
+- **Paso 24.** Construye, etiqueta y sube `ms-productos`. **Ejecuta los comandos 1 por 1:**
+
+  - La ruta del siguiente comando esta adaptada para ejecutarse desde adentro de la carpeta **ms-deseos**
 
   **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-productos**.
 
@@ -359,19 +373,42 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
   ![micint](../images/lab5/5.png)
 
-- **Paso 25.** Repite para `ms-deseos`:
+- **Paso 25.** Esta paso es condicionante para subir la imagen `ms-deseos`:
 
-  **NOTA:** Si es necesario ajusta la ruta para entrar al directorio **ms-deseos**.
+  - Escribe el siguiente comando: `df -h`
+  - Si el espacio en disco esta lleno como la imagen, realiza los siguientes pasos.
+  - **Solo si el resultado **NO** es como el de la imagen ejecuta este comando:** `cd ../ms-deseos`
+  - Continua desde el comando **docker build...** solo si no tienes lleno el disco de **AWS CloudShell**
 
-  **IMPORTANTE:** Solo si te llegase a marcar error a causa de almacenamiento de AWS Cloud Shell da clic en **Actions** y luego en **Restart**. Sino continua con la construcciones de la imagen
+  ---
 
-  - Repite los siguientes pasos para configurar las variables.
-  - `ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)`
-  - `REGION=us-west-2`
-  - `ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com`
+  ![micint](../images/lab5/20.png)
+
+  ---
+
+  - Da clic en **Actions** (esquina superior derecha de **AWS CloudShell**) y luego en **Restart**.
+  - Confirma **Restart** en la ventana emergente.
+  - **Repite** los siguientes pasos para configurar las variables.
+
+  ---
+  
+  ```bash
+  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  sudo mv /tmp/eksctl /usr/local/bin
+  ```
+  ```bash
+  ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+  REGION=us-west-2
+  ECR_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
+  aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_URI
+  ```
+  
+  ---
+
+  - Ahora retoma la compilación y carga de la imagen **ms-deseos**
 
   ```bash
-  cd ./ms-deseos
+  cd proyecto-ingress && cd ms-deseos
   ```
 
   ---
@@ -424,12 +461,12 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   cd ../manifiestos-k8s
   ```
 
-- **Paso 28.** Ahora ejecuta los siguientes puntos:
+- **Paso 28.** Ahora ejecuta los siguientes puntos dentro del directorio **manifiestos-k8s**:
 
-  - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2**
+  - Escribe el siguiente comando: `echo $ECR_URI` sino te da resultado vuelve a la **Tarea 4.2** **Paso 23**
   - Crea el archivo llamado: `touch deployment-msprod.yaml`
   - Edita el archivo con nano u otro editor: `nano deployment-msprod.yaml`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo dentro del archivo **deployment-msprod.yaml**.
   - Edita la URI del respositorio
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
@@ -469,11 +506,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 5.2 – Crear archivo de despliegue para ms-deseos
 
-- **Paso 29.** Ejecuta los siguientes puntos:
+- **Paso 29.** Ejecuta los siguientes puntos dentro del directorio **manifiestos-k8s**:
 
   - Crea el archivo llamado: `touch deployment-msdeseos.yaml`
   - Edita el archivo con nano u otro editor: `nano deployment-msdeseos.yaml`
-  - Pega el contenido yaml.
+  - Copia el contenido de abajo y pegalo dentro del archivo **deployment-msdeseos.yaml**.
   - Edita la URI del respositorio
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
@@ -513,7 +550,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 > **TAREA FINALIZADA**
 
-**Resultado esperado:** Archivo listo para desplegar ambos servicios.
+**Resultado esperado:** Archivos listo para desplegar ambos servicios.
 
 ---
 
@@ -525,7 +562,15 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 30.** Primero verifica si ya existe:
 
-  **NOTA:** Regresa a la **Tarea 2.1** para instalar **eksctl**. Cambia las letras `x` al nombre de tu cluster.
+  - Instala **eksctl** sino lo instalaste despues de reiniciar AWS CloudShell
+  
+  ```bash
+  cd ~
+  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  sudo mv /tmp/eksctl /usr/local/bin
+  ```
+
+  - Ejecuta el siguiente comando, **pero antes cambia las letras `x` al nombre de tu cluster.**
 
   ```bash
   eksctl utils associate-iam-oidc-provider --region us-west-2 --cluster eks-citas-xxxx --approve
@@ -537,13 +582,17 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 6.2 – Crear la política de IAM
 
-- **Paso 31.** Descarga la política de IAM oficial desde AWS
+- **Paso 31.** Descarga la política de IAM oficial desde AWS en el directorio **manifiestos-k8s**
 
   ```bash
+  cd proyecto-ingress && cd manifiestos-k8s
   curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
   ```
 
 - **Paso 32.** Crea una política de IAM personalizada en tu cuenta
+
+  - Ejecutalo desde adentro de la carpeta **manifiestos-k8s**
+  - Sino ajusta las rutas a donde se encuentre el archivo `iam_policy.json`
 
   ```bash
   aws iam create-policy \
@@ -555,7 +604,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
   ![micint](../images/lab5/9.png)
 
-- **Paso 33.** Del resultado de la politica guarda el valor de **Arn** en un bloc de notas, lo usaras mas adelante.
+- **Paso 33.** Del resultado de la politica **guarda el valor** de **Arn** en un bloc de notas, lo usaras mas adelante.
 
   ![micint](../images/lab5/10.png)
 
@@ -563,10 +612,10 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 34.** Crea un ServiceAccount con esa política asociada (IRSA). sustituye los siguientes valores.
 
-  - Pasa el siguiente comando a tu editor de texto.
+  - **Primero pasa el siguiente comando a tu editor de texto.**
   - Sustituye las letras `x`por las de tu cluster.
-  - Cambia el valor `<POLITICA-ARN>` por el que guardaste, sin las comillas dobles.
-  - Ejecutalo en la terminal de AWS Cloud Shell.
+  - Cambia el valor `<POLITICA_ARN_AQUÍ>` **por el que guardaste**, sin las comillas dobles.
+  - Ejecutalo en la terminal de **AWS Cloud Shell**.
 
   ```bash
   eksctl create iamserviceaccount \
@@ -578,7 +627,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
     --approve
   ```
 
-- **Paso 35.** Espera de 30 segundos a 2 minutos y veras el resultado exitoso en la terminal.
+- **Paso 35.** Espera de **30 segundos a 2 minutos** y veras el resultado exitoso en la terminal.
 
   ![micint](../images/lab5/11.png)
 
@@ -595,6 +644,8 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 #### Tarea 6.4 – Aplicar permisos RBAC correctos
 
 - **Paso 37.** Aplica el `ClusterRole` con permisos completos:
+
+  - Dentro de la carpeta **manifiestos-k8s** copia y pega el contenido de abajo, ya crea y aplica el **yaml**.
 
   ```bash
   kubectl apply -f - <<EOF
@@ -623,6 +674,8 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 38.** Aplica el `ClusterRoleBinding` correspondiente:
 
+  - Dentro de la carpeta **manifiestos-k8s** copia y pega el contenido de abajo, ya crea y aplica el **yaml**.
+
   ```bash
   kubectl apply -f - <<EOF
   apiVersion: rbac.authorization.k8s.io/v1
@@ -642,7 +695,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 6.5 – Crear el Secret TLS
 
-- **Paso 39.** Crea los certificados TLS
+- **Paso 39.** Dentro del directorio **manifiestos-k8s** crea los certificados TLS. Ejecuta el sisguiente comando
 
   ```bash
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -650,7 +703,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   -keyout tls.key -out tls.crt
   ```
 
-- **Paso 40.** Crea el Secret con los certificados
+- **Paso 40.** Crea el Secret con los certificados en el mismo directorio **manifiestos-k8s**
 
   ```bash
   kubectl create secret tls aws-load-balancer-webhook-tls \
@@ -661,13 +714,17 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 6.6 – Aplicar los CRDs requeridos
 
-- **Paso 41.** Aplica los CRDs obligatorios
+- **Paso 41.** Aplica los CRDs obligatorios dentro de directorio **manifiestos-k8s**
+
+  - CRD 1
 
   ```bash
   kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.6.2/config/crd/bases/elbv2.k8s.aws_targetgroupbindings.yaml
   ```
   
   ---
+
+  - CRD 2
 
   ```bash
   kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.6.2/config/crd/bases/elbv2.k8s.aws_ingressclassparams.yaml
@@ -677,11 +734,15 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 - **Paso 42.** Crear una carpeta para organizar los manifiestos
 
+  - Dentro del directorio **manifiestos-k8s** ejecuta el siguiente comando.
+
   ```bash
   mkdir alb-controller && cd alb-controller
   ```
 
 - **Paso 43.** Crea el ingress class con el siguiente comando.
+
+  - Ejecuta el siguiente codigo, crea y aplica el archivo yaml.
 
   ```bash
   kubectl apply -f - <<EOF
@@ -696,7 +757,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 6.8 – Crear el manifiesto del ALB Controller
 
-- **Paso 44.** Crea el archivo completo `alb-controller.yaml`
+- **Paso 44.** Crea el archivo completo `alb-controller.yaml` dentro del directorio **alb-controller**
 
   ```bash
   nano alb-controller.yaml
@@ -709,8 +770,6 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   - Guarda con `Ctrl + o`, Enter, y luego `Ctrl + x`.
 
   ```yaml
-  # alb-controller.yaml
-  ---
   apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -742,7 +801,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
           - name: controller
             image: public.ecr.aws/eks/aws-load-balancer-controller:v2.6.2
             args:
-              - --cluster-name=eks-citas-xxxx   # <--- Sustituye este valor
+              - --cluster-name=eks-citas-xxxx   # <--- Sustituye este valor de las x
               - --ingress-class=alb
               - --aws-region=us-west-2
               - --webhook-cert-dir=/tmp/k8s-webhook-server/serving-certs
@@ -763,6 +822,8 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
   ```
 
 - **Paso 46.** Aplica el manifiesto
+
+  - Puedes ignorar por el momento el mensaje con etiqueta **Warning**
 
   ```bash
   kubectl apply -f alb-controller.yaml
@@ -816,11 +877,11 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
 #### Tarea 7.2 – Crear archivo `ingress.yaml`
 
-- **Paso 50.** Configura lo siguiente:
+- **Paso 50.** Configura lo siguiente dentro del directorio **alb-controller**:
 
   - Crea el archivo llamado: `touch ingress.yaml`
   - Edita el archivo con nano u otro editor: `nano ingress.yaml`
-  - Pega el contenido yaml.
+  - Copia el contenido y pegalo dentro del archivo **ingress.yaml**
   - Para salir del editor ejecuta `CTRL + O` Enter y `CTRL + X`
 
   ```yaml
@@ -832,6 +893,8 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+      alb.ingress.kubernetes.io/healthcheck-path: /
+      alb.ingress.kubernetes.io/success-codes: "200-399"
   spec:
     ingressClassName: alb
     rules:
@@ -907,6 +970,7 @@ Kubernetes permite exponer servicios internos mediante Ingress. En Amazon EKS, e
 
   - `http://<ALB>/productos` → lista productos
   - `http://<ALB>/deseos` → añade productos a deseos y muestra lista
+  - Verifica que la URL siempre apunte a HTTP
 
   ![micint](../images/lab5/18.png)
 
@@ -936,11 +1000,21 @@ Dos microservicios interdependientes desplegados en Amazon EKS, accesibles por p
   kubectl logs deploy/ms-productos
   kubectl logs deploy/ms-deseos
   ```
+- Borrar los objetos del cluster 1x1.
+  ```bash
+  kubectl delete svc ms-productos ms-deseos
+  ```
+  ---
+  ```bash
+  kubectl delete svc ms-productos ms-deseos
+  kubectl delete deployment ms-productos ms-deseos
+  kubectl get all
+  ```
 
 ## URLs de referencia
 
-- https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
-- https://kubernetes.io/docs/concepts/services-networking/ingress/
+- [Enrutar el tráfico de Internet con AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
+- [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 ---
 
